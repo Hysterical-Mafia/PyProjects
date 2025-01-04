@@ -1,5 +1,5 @@
 #introductions
-'''
+
 consent = input("Hello, would you like me to find your letter grade? Yes or No?")
 
 consent = consent.strip().lower()
@@ -8,7 +8,7 @@ consent = consent.strip().lower()
 if consent == "yes" or consent == "ye" or consent == "y":
     print("Cool, Lets Continue!")
 else: print("Ok, Goodbye")
-'''
+
 #how many grades are being input
 gradeCount = int(input("How Many Grades do you want to calculate?"))
 a = []
