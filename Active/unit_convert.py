@@ -8,12 +8,12 @@ def main():
     print("Conversion Categories: ")
     for index, value in enumerate(conversionCategories):
         print(f"{index} : {value}")
-    choice = int((input("\nSelect One: \n")))
+    choice = int((input("\nSelect One: ")))
     
     #Dictionary for running the function related to the conversion that was chosen
     conversion_options = {
         0: Length_Converter_Menu, 
-        1: Temp_Converter,
+        1: Temp_Converter_Menu,
         2: Area_Converter,
         3: Volume_Converter,
         4: Weight_Converter,
@@ -43,7 +43,7 @@ def Length_Converter_Menu():
         return 
     to_choice = int(input("Select the unit you want to convert to (0-9)"))
     if to_choice < 0 or from_choice >= len(units):
-        print("Invalid choice for 'from' unit. Please select a valid option.")
+        print("Invalid choice for 'to' unit. Please select a valid option.")
         return 
     value = int(input("Enter the value you want to convert"))
     
@@ -51,7 +51,7 @@ def Length_Converter_Menu():
     to_unit = units[to_choice]
     result = Length_Converter(value, from_unit, to_unit)
     
-    print(f"{value} {from_unit} is {result} {to_unit}")
+    print(f"{value} {from_unit} is {result:.2f} {to_unit}")
     
 def Length_Converter(value, from_unit, to_unit):
     length_conversion_factors = {
@@ -74,11 +74,51 @@ def Length_Converter(value, from_unit, to_unit):
     #conversion formula    ex. converting 1cm to meters would output 0.01, 1*(meter / centimeter) = 1 divided by 100 = 0.01 * 1 = "0.01"
     return value * (length_conversion_factors[to_unit] / length_conversion_factors[from_unit])
     
-    
-
 #Will take in conversions related to Temp    
-def Temp_Converter():
-    print("1")  
+def Temp_Converter_Menu():
+    temp_conversion_formula = {
+    ("Celsius", "Fahrenheit"): lambda c: (c * 9/5) + 32,
+    ("Celsius", "Kelvin"): lambda c: c + 273.15,
+    ("Fahrenheit", "Celsius"): lambda f: (f - 32) * 5/9,
+    ("Fahrenheit", "Kelvin"): lambda f: (f - 32) * 5/9 + 273.15,
+    ("Kelvin", "Celsius"): lambda k: k - 273.15,
+    ("Kelvin", "Fahrenheit"): lambda k: (k - 273.15) * 9/5 + 32,
+    }
+    
+    units = ["Celsius", "Fahrenheit", "Kelvin"]
+    
+    for index, unit in enumerate(units):
+        print(f"{index}: {unit}")
+    
+    try:
+        from_choice = int(input("Select the temperatures you want to convert from (0-2): "))
+        to_choice = int(input("Select the unit you want to convert to (0-2): "))
+        
+        if from_choice not in range(len(units)) or to_choice not in range(len(units)):
+            print("Invalid choice for conversions. Please select a valid option.")
+            return 
+    
+        value = float(input("Enter the value you want to convert: "))
+    
+        from_unit = units[from_choice]
+        to_unit = units[to_choice]
+        
+        result = Temp_Converter(value, from_unit, to_unit, temp_conversion_formula)
+        #.2f rounds it 2 decimal places instead of it being a long decimal ex. 25.6789 to 25.68
+        print(f"\n{value} {from_unit} is {result:.2f} {to_unit}")
+
+    except ValueError:
+        print("Invalid input")
+    
+def Temp_Converter(value, from_unit, to_unit, temp_conversion_formula):
+    if from_unit == to_unit:  
+        return value 
+
+    if (from_unit, to_unit) in temp_conversion_formula:
+        return temp_conversion_formula[(from_unit, to_unit)](value)
+
+    raise ValueError("Invalid conversion type")
+     
 #Will take in conversions related to Area    
 def Area_Converter():
     print("1")  
