@@ -14,7 +14,7 @@ def main():
     conversion_options = {
         0: Length_Converter_Menu, 
         1: Temp_Converter_Menu,
-        2: Area_Converter,
+        2: Area_Converter_Menu,
         3: Volume_Converter,
         4: Weight_Converter,
         5: Time_Converter,
@@ -45,7 +45,7 @@ def Length_Converter_Menu():
     if to_choice < 0 or from_choice >= len(units):
         print("Invalid choice for 'to' unit. Please select a valid option.")
         return 
-    value = int(input("Enter the value you want to convert"))
+    value = float(input("Enter the value you want to convert"))
     
     from_unit = units[from_choice]
     to_unit = units[to_choice]
@@ -120,8 +120,65 @@ def Temp_Converter(value, from_unit, to_unit, temp_conversion_formula):
     raise ValueError("Invalid conversion type")
      
 #Will take in conversions related to Area    
-def Area_Converter():
-    print("1")  
+def Area_Converter_Menu():
+    #sets the base units for each factor
+    #list of units to create the numbered list
+    units = [
+        "Square Meter(m²)",
+        "Square Kilometer(km²)",
+        "Square Centimeter(cm²)",
+        "Square Millimeter(mm²)",
+        "Square Micrometer(µm²)", 
+        "Hectare(ha)",
+        "Square Mile(mi²)",
+        "Square Yard(yd²)",
+        "Square Foot(ft²)",
+        "Square Inch(in²)",
+        "Acre(ac)",
+    ]
+    for index, unit in enumerate(units):
+        print(f"{index}. {unit}")
+    
+    try:
+        from_choice = int(input("Select the units you want to convert from (0-10): "))
+        to_choice = int(input("Select the unit you want to convert to (0-10): "))
+        
+        if from_choice not in range(len(units)) or to_choice not in range(len(units)):
+            print("Invalid choice for conversions. Please select a valid option.")
+            return  
+        value = float(input("Enter the value you want to convert"))
+    
+        from_unit = units[from_choice]
+        to_unit = units[to_choice]
+        result = Area_Converter(value, from_unit, to_unit)
+    
+        print(f"\n{value} {from_unit} is {result:} {to_unit}")
+
+    except ValueError:
+        print("Invalid input")
+    
+def Area_Converter(value, from_unit, to_unit):
+    area_conversion_factors = {
+        "Square Meter(m²)" : 1, #base unit
+        "Square Kilometer(km²)" : 0.000001,
+        "Square Centimeter(cm²)" : 10000,
+        "Square Millimeter(mm²)" : 1e6,
+        "Square Micrometer(µm²)" : 1e12, 
+        "Hectare(ha)" : 0.0001,
+        "Square Mile(mi²)" : 3.861018768E-7,
+        "Square Yard(yd²)" : 1.1959900463,
+        "Square Foot(ft²)" : 10.763910417,
+        "Square Inch(in²)" : 1550.0031,
+        "Acre(ac)" : 0.0002471054,
+    }
+    
+    #make sure inputs are correct
+    if from_unit not in area_conversion_factors or to_unit not in area_conversion_factors:
+        return "Error"
+    
+    return value * (area_conversion_factors[to_unit] / area_conversion_factors[from_unit])
+
+
 #Will take in conversions related to Volume
 def Volume_Converter():
     print("1")   
