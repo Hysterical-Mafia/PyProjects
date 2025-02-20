@@ -16,8 +16,8 @@ def main():
         1: Temp_Converter_Menu,
         2: Area_Converter_Menu,
         3: Volume_Converter_Menu,
-        #4: Weight_Converter_Menu,
-        #5: Time_Converter_Menu,
+        4: Weight_Converter_Menu,
+        5: Time_Converter_Menu,
     }
     
     if choice in conversion_options:
@@ -53,7 +53,7 @@ def Length_Converter_Menu():
         print("Invalid choice for 'from' unit. Please select a valid option.")
         return 
     to_choice = int(input(f"Select the unit you want to convert to (0-{size-1}): "))
-    if to_choice < 0 or from_choice >= len(units):
+    if to_choice < 0 or to_choice >= len(units):
         print("Invalid choice for 'to' unit. Please select a valid option.")
         return 
     value = float(input("Enter the value you want to convert: "))
